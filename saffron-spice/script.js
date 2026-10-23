@@ -97,6 +97,77 @@ document.querySelectorAll('#navLinks a').forEach(link=>link.addEventListener('cl
 const dateInput=document.getElementById('bookingDate');const today=new Date();const localDate=new Date(today.getTime()-today.getTimezoneOffset()*60000).toISOString().split('T')[0];dateInput.min=localDate;
 document.getElementById('reservationForm').addEventListener('submit',event=>{event.preventDefault();if(!event.currentTarget.reportValidity())return;const data=new FormData(event.currentTarget);trackActivity('reservation_request',{guestName:data.get('guestName'),guestPhone:data.get('guestPhone'),guestEmail:data.get('guestEmail'),bookingDate:data.get('bookingDate'),bookingTime:data.get('bookingTime'),guestCount:data.get('guestCount'),result:'demo_request'});const message=document.getElementById('formMessage');message.textContent=`Thanks, ${data.get('guestName')}! Your table request was captured in this demo. No confirmed booking has been made.`;message.classList.add('show');message.scrollIntoView({behavior:'smooth',block:'nearest'});});
 document.getElementById('year').textContent=new Date().getFullYear();
+
+// Supabase Auth (publishable key is intended for browser use; never use a service-role key here).
+const SUPABASE_URL = 'https://ohoksetlifocyfrwysax.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_sjNPR8uXBWpE9K9xQSaPyA_wTWUNyFu';
+let supabaseClient = null;
+let authIsSignup = false;
+const authOverlay = document.getElementById('authOverlay');
+const authForm = document.getElementById('authForm');
+const authMessage = document.getElementById('authMessage');
+const authButton = document.getElementById('openAuth');
+function showAuth() { authOverlay.classList.add('open'); authOverlay.setAttribute('aria-hidden','false'); }
+function hideAuth() { authOverlay.classList.remove('open'); authOverlay.setAttribute('aria-hidden','true'); }
+function setAuthMessage(message) { authMessage.textContent = message; }
+function updateAuthUI(user) {
+  authButton.textContent = user ? (user.email || 'Account') + ' · Log out' : 'Log in';
+  if (typeof trackActivity === 'function') {
+    if (user) { authenticatedUser = {id:user.id, email:user.email || ''}; trackActivity('login_success', {provider:'supabase'}, authenticatedUser); }
+    else authenticatedUser = null;
+  }
+}
+if (window.supabase && window.supabase.createClient) {
+  supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+  supabaseClient.auth.getSession().then(({data}) => updateAuthUI(data.session?.user || null));
+  supabaseClient.auth.onAuthStateChange((_event, session) => updateAuthUI(session?.user || null));
+}
+document.getElementById('openAuth').addEventListener('click', async () => {
+  if (!supabaseClient) { showAuth(); setAuthMessage('Auth library did not load. Refresh and try again.'); return; }
+  const {data} = await supabaseClient.auth.getSession();
+  if (data.session) {
+    const {error} = await supabaseClient.auth.signOut();
+    setAuthMessage(error ? error.message : 'You are logged out.');
+    updateAuthUI(null);
+    return;
+  }
+  authIsSignup = false;
+  document.getElementById('authTitle').innerHTML = 'Your table, <em>your account.</em>';
+  document.getElementById('authSubmit').textContent = 'Log in ↗';
+  document.getElementById('authMode').textContent = 'New here? Create account';
+  setAuthMessage('');
+  showAuth();
+});
+document.getElementById('closeAuth').addEventListener('click', hideAuth);
+authOverlay.addEventListener('click', e => { if (e.target === authOverlay) hideAuth(); });
+document.getElementById('authMode').addEventListener('click', () => {
+  authIsSignup = !authIsSignup;
+  document.getElementById('authTitle').innerHTML = authIsSignup ? 'Join our <em>table.</em>' : 'Your table, <em>your account.</em>';
+  document.getElementById('authSubmit').textContent = authIsSignup ? 'Create account ↗' : 'Log in ↗';
+  document.getElementById('authMode').textContent = authIsSignup ? 'Already have an account? Log in' : 'New here? Create account';
+  document.getElementById('authPassword').autocomplete = authIsSignup ? 'new-password' : 'current-password';
+  setAuthMessage('');
+});
+authForm.addEventListener('submit', async e => {
+  e.preventDefault();
+  if (!supabaseClient) { setAuthMessage('Supabase client is unavailable. Check your internet connection.'); return; }
+  const email = document.getElementById('authEmail').value.trim();
+  const password = document.getElementById('authPassword').value;
+  const submit = document.getElementById('authSubmit');
+  submit.disabled = true;
+  setAuthMessage(authIsSignup ? 'Creating account…' : 'Signing in…');
+  try {
+    const result = authIsSignup
+      ? await supabaseClient.auth.signUp({email, password})
+      : await supabaseClient.auth.signInWithPassword({email, password});
+    if (result.error) throw result.error;
+    if (authIsSignup && !result.data.session) setAuthMessage('Account created. Check your email to confirm, then log in.');
+    else { setAuthMessage(authIsSignup ? 'Account created and signed in.' : 'Login successful.'); updateAuthUI(result.data.user || result.data.session?.user || null); setTimeout(hideAuth, 900); }
+  } catch (err) { setAuthMessage(err.message || 'Authentication failed.'); }
+  finally { submit.disabled = false; }
+});
+
+
 trackActivity('page_view', { title: document.title });
 trackActivity('product_catalog_sync', { products: menuItems.map(({id,name,category,price,description,badge,image})=>({id,name,category,price,description,badge,image})) });
 renderMenu();renderCart();

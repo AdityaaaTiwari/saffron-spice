@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="script.js" defer></script>
 </head>
 <body>
@@ -17,6 +18,7 @@
     <a class="brand" href="#home" aria-label="Saffron and Spice home"><span class="brand-mark">✳</span><span>SAFFRON <i>&</i> SPICE<small>INDIAN KITCHEN</small></span></a>
     <button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false"><span></span><span></span></button>
     <nav class="nav-links" id="navLinks"><a class="active" href="#home">Home</a><a href="#menu">Our Menu</a><a href="#story">Our Story</a><a href="#visit">Visit Us</a><button class="nav-book" data-scroll="#reservation">Book a table <span>↗</span></button></nav>
+    <button class="auth-button" id="openAuth">Log in</button>
     <button class="cart-button" id="openCart" aria-label="Open shopping cart">Bag <span id="cartCount">0</span></button>
   </header>
 
@@ -56,6 +58,21 @@
 
   <footer class="footer"><a class="brand footer-brand" href="#home"><span class="brand-mark">✳</span><span>SAFFRON <i>&</i> SPICE<small>INDIAN KITCHEN</small></span></a><p>Good food. Good people. Good things happen here.</p><div class="footer-links"><a href="#menu">Menu</a><a href="#story">Our story</a><a href="#reservation">Reservations</a><a href="#visit">Find us</a></div><p class="form-note">Privacy note: the site may record page, menu, cart and reservation-request events for service operations. Passwords, OTPs and payment-card data are not collected by this activity logger.</p><div class="footer-bottom"><span>© <span id="year"></span> Saffron & Spice</span><span>MADE WITH A LITTLE EXTRA LOVE ✳</span><a href="#home">BACK TO TOP ↑</a></div></footer>
 
+  <div class="auth-overlay" id="authOverlay" aria-hidden="true">
+    <section class="auth-panel" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+      <button class="auth-close" id="closeAuth" aria-label="Close login">×</button>
+      <span class="eyebrow"><span></span> WELCOME TO SAFFRON & SPICE</span>
+      <h2 id="authTitle">Your table, <em>your account.</em></h2>
+      <p id="authHint">Sign in or create an account to continue.</p>
+      <form id="authForm">
+        <label for="authEmail">Email</label><input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com">
+        <label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" minlength="6" required placeholder="At least 6 characters">
+        <button class="button button-dark" id="authSubmit" type="submit">Log in ↗</button>
+        <button class="auth-switch" id="authMode" type="button">New here? Create account</button>
+        <p id="authMessage" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </div>
   <div class="cart-overlay" id="cartOverlay" aria-hidden="true"><aside class="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle"><div class="cart-head"><div><span class="eyebrow">SOMETHING DELICIOUS</span><h2 id="cartTitle">Your bag <em>of joy.</em></h2></div><button class="close-cart" id="closeCart" aria-label="Close cart">×</button></div><div class="cart-items" id="cartItems"><div class="empty-cart">Your bag is looking a little empty.<br><span>Let’s fix that with something delicious.</span></div></div><div class="cart-bottom"><div class="cart-total"><span>Subtotal</span><strong id="cartTotal">₹0</strong></div><p>Taxes and delivery calculated at checkout.</p><button class="button button-dark checkout-button" id="checkoutButton">Continue to checkout <span>↗</span></button><small class="demo-note">Demo only — no payment is collected.</small></div></aside></div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
