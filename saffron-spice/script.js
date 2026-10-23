@@ -1,5 +1,5 @@
 // Google Sheets logger: paste the deployed Google Apps Script /exec URL below.
-const SHEETS_WEB_APP_URL = 'PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE';
+const SHEETS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbw3UNw5BcEFAbY_Z9kN2L7qBhCWsJMfuKAKlJYn1KMIrN4rvhVJRzMQbAC5a6vAAz3uAw/exec';
 const activitySessionId = (() => {
   const key = 'saffron_activity_session';
   let id = sessionStorage.getItem(key);
@@ -53,16 +53,7 @@ const menuItems = [
   {id:6,name:'Crispy Aloo Tikki',category:'Starters',price:199,badge:'A CLASSIC',description:'Golden potato patties, tangy chutneys, crunchy sev.',image:'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=850&q=85'}
 ];
 
-// Google Sheets activity logging. Passwords, OTPs and payment data are never collected.
-const SHEETS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbw3UNw5BcEFAbY_Z9kN2L7qBhCWsJMfuKAKlJYn1KMIrN4rvhVJRzMQbAC5a6vAAz3uAw/exec';
-const activitySessionId = (() => {
-  try { let id = sessionStorage.getItem('saffron_session_id'); if (!id) { id = (crypto.randomUUID ? crypto.randomUUID() : 's-' + Date.now() + '-' + Math.random().toString(16).slice(2)); sessionStorage.setItem('saffron_session_id', id); } return id; }
-  catch (_) { return 's-' + Date.now(); }
-})();
-function logActivity(event, data = {}) {
-  const payload = { event, sessionId: activitySessionId, page: location.pathname + location.hash, data, user: {} };
-  try { fetch(SHEETS_WEB_APP_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload), keepalive: true }).catch(() => {}); } catch (_) {}
-}
+// Activity logging uses the single configured tracker above.
 
 const cart = new Map();
 const foodGrid = document.getElementById('foodGrid');
@@ -75,7 +66,6 @@ let toastTimer;
 
 function money(value){ return new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:0}).format(value); }
 function renderMenu(category='All'){
-  logActivity('menu_filter', { category });
   const visible = category === 'All' ? menuItems : menuItems.filter(item=>item.category===category);
   trackActivity('menu_filter', { category, itemCount: visible.length });
   visible.forEach(item => trackActivity('product_impression', { productId: item.id, productName: item.name, category: item.category, unitPrice: item.price }));
@@ -110,5 +100,3 @@ document.getElementById('year').textContent=new Date().getFullYear();
 trackActivity('page_view', { title: document.title });
 trackActivity('product_catalog_sync', { products: menuItems.map(({id,name,category,price,description,badge,image})=>({id,name,category,price,description,badge,image})) });
 renderMenu();renderCart();
-logActivity('page_view');
-logActivity('product_catalog_sync',{products:menuItems});
