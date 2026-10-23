@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Saffron & Spice — thoughtfully crafted Indian flavours, made for moments worth sharing." />
+  <title>Saffron & Spice | A little spice. A lot of soul.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="announcement">A table full of flavour, a heart full of memories. <span>Made fresh, every day.</span></div>
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="Saffron and Spice home"><span class="brand-mark">✳</span><span>SAFFRON <i>&</i> SPICE<small>INDIAN KITCHEN</small></span></a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false"><span></span><span></span></button>
+    <nav class="nav-links" id="navLinks"><a class="active" href="#home">Home</a><a href="#menu">Our Menu</a><a href="#story">Our Story</a><a href="#visit">Visit Us</a><button class="nav-book" data-scroll="#reservation">Book a table <span>↗</span></button></nav>
+    <button class="cart-button" id="openCart" aria-label="Open shopping cart">Bag <span id="cartCount">0</span></button>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-copy">
+        <div class="eyebrow"><span></span> A MODERN INDIAN KITCHEN</div>
+        <h1>A little spice.<br><em>A lot of soul.</em></h1>
+        <p>Thoughtfully crafted Indian flavours, made for moments worth sharing. Come hungry, leave happy.</p>
+        <div class="hero-actions"><a class="button button-dark" href="#menu">Explore the menu <span>↗</span></a><button class="text-link" data-scroll="#reservation">Find your table <span>→</span></button></div>
+        <div class="hero-meta"><div class="avatars"><span>R</span><span>A</span><span>M</span></div><div><strong>4.9/5 guest love</strong><small>Good food. Better company.</small></div><div class="hero-line"></div><div><strong>Made with care</strong><small>Fresh ingredients, always</small></div></div>
+      </div>
+      <div class="hero-art">
+        <div class="hero-image"><img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=1100&q=85" alt="Colourful Indian meal served with fresh herbs and spices"></div>
+        <div class="image-note"><span class="note-star">✳</span><span>THE ART OF<br><strong>GOOD FOOD</strong></span></div>
+        <div class="floating-tag"><span>✦</span><div><strong>Flavour, first.</strong><small>Always made fresh</small></div></div>
+        <div class="hero-stamp">EST.<br><b>2020</b></div>
+      </div>
+      <div class="hero-bottom"><span>01 / A TASTE OF HOME</span><span>SCROLL TO DISCOVER ↓</span><span>GOOD FOOD, GOOD MOOD</span></div>
+    </section>
+
+    <section class="intro-strip" id="story"><div class="strip-icon">✳</div><p>Recipes rooted in tradition.<br><em>Made for today.</em></p><div class="strip-divider"></div><p class="strip-small">We bring the warmth of an Indian home kitchen to a table you'll want to return to.</p><a href="#visit" class="round-arrow" aria-label="Discover our story">↗</a></section>
+
+    <section class="menu-section section-pad" id="menu">
+      <div class="section-heading"><div><div class="eyebrow"><span></span> MADE TO BE SHARED</div><h2>Something for<br><em>every craving.</em></h2></div><p>Big on flavour, generous with love.<br>Here are a few of our favourites.</p></div>
+      <div class="menu-toolbar"><div class="filter-list" id="filters"><button class="filter active" data-category="All">All favourites <span>06</span></button><button class="filter" data-category="Starters">Starters</button><button class="filter" data-category="Mains">Mains</button><button class="filter" data-category="Desserts">Desserts</button><button class="filter" data-category="Drinks">Drinks</button></div><span class="menu-note">FRESHLY PREPARED, JUST FOR YOU</span></div>
+      <div class="food-grid" id="foodGrid"></div>
+      <div class="menu-footer"><span>Can’t decide? That’s a good problem to have.</span><button class="button button-outline" data-scroll="#menu">Explore our favourites <span>↗</span></button></div>
+    </section>
+
+    <section class="quote-section"><div class="quote-mark">“</div><blockquote>Good food is the<br>beginning of <em>good stories.</em></blockquote><p>Pull up a chair. We saved you a seat.</p><div class="quote-ornament">✳ &nbsp; ✳ &nbsp; ✳</div></section>
+
+    <section class="visit-section section-pad" id="visit"><div class="visit-photo"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1100&q=85" alt="Warmly lit restaurant dining table set for guests"><div class="photo-caption">A PLACE TO SLOW DOWN <span>✳</span></div></div><div class="visit-copy"><div class="eyebrow"><span></span> YOUR TABLE IS WAITING</div><h2>Come for the food.<br><em>Stay for the feeling.</em></h2><p>Whether it’s a long-overdue catch-up, a little celebration, or simply Tuesday — there’s always room at our table.</p><div class="detail-row"><span class="detail-icon">⌖</span><div><strong>Find our kitchen</strong><small>Jaipur, Rajasthan, India</small></div></div><div class="detail-row"><span class="detail-icon">◷</span><div><strong>Come by anytime</strong><small>Mon – Sun · 12:00 PM – 11:00 PM</small></div></div><button class="button button-dark" data-scroll="#reservation">Reserve your table <span>↗</span></button></div></section>
+
+    <section class="reservation-section" id="reservation"><div class="reservation-copy"><div class="eyebrow"><span></span> MAKE IT A MOMENT</div><h2>Let’s save you<br><em>a seat.</em></h2><p>Tell us when you’re coming. We’ll take care of the rest.</p><div class="reservation-aside">“The best memories are made around a table.”</div></div><form class="reservation-form" id="reservationForm"><div class="form-top"><strong>Book a table</strong><span>IT ONLY TAKES A MINUTE</span></div><label for="guestName">Your name</label><input id="guestName" name="guestName" type="text" placeholder="e.g. Aditi Sharma" required maxlength="80"><div class="form-row"><div><label for="guestEmail">Email address</label><input id="guestEmail" name="guestEmail" type="email" placeholder="you@example.com" required></div><div><label for="guestPhone">Phone number</label><input id="guestPhone" name="guestPhone" type="tel" placeholder="Your number" required></div></div><div class="form-row"><div><label for="bookingDate">Date</label><input id="bookingDate" name="bookingDate" type="date" required></div><div><label for="bookingTime">Time</label><select id="bookingTime" name="bookingTime" required><option value="">Choose a time</option><option>12:00 PM</option><option>1:00 PM</option><option>2:00 PM</option><option>6:00 PM</option><option>7:00 PM</option><option>8:00 PM</option><option>9:00 PM</option><option>10:00 PM</option></select></div></div><label for="guestCount">Number of guests</label><select id="guestCount" name="guestCount"><option>2 guests</option><option>1 guest</option><option>3 guests</option><option>4 guests</option><option>5 guests</option><option>6 guests</option><option>7+ guests</option></select><button class="button button-dark submit-button" type="submit">Request a reservation <span>↗</span></button><p class="form-note">This demo form shows a confirmation only. Connect a booking service to accept real reservations.</p><div class="form-message" id="formMessage" role="status" aria-live="polite"></div></form></section>
+  </main>
+
+  <footer class="footer"><a class="brand footer-brand" href="#home"><span class="brand-mark">✳</span><span>SAFFRON <i>&</i> SPICE<small>INDIAN KITCHEN</small></span></a><p>Good food. Good people. Good things happen here.</p><div class="footer-links"><a href="#menu">Menu</a><a href="#story">Our story</a><a href="#reservation">Reservations</a><a href="#visit">Find us</a></div><div class="footer-bottom"><span>© <span id="year"></span> Saffron & Spice</span><span>MADE WITH A LITTLE EXTRA LOVE ✳</span><a href="#home">BACK TO TOP ↑</a></div></footer>
+
+  <div class="cart-overlay" id="cartOverlay" aria-hidden="true"><aside class="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle"><div class="cart-head"><div><span class="eyebrow">SOMETHING DELICIOUS</span><h2 id="cartTitle">Your bag <em>of joy.</em></h2></div><button class="close-cart" id="closeCart" aria-label="Close cart">×</button></div><div class="cart-items" id="cartItems"><div class="empty-cart">Your bag is looking a little empty.<br><span>Let’s fix that with something delicious.</span></div></div><div class="cart-bottom"><div class="cart-total"><span>Subtotal</span><strong id="cartTotal">₹0</strong></div><p>Taxes and delivery calculated at checkout.</p><button class="button button-dark checkout-button" id="checkoutButton">Continue to checkout <span>↗</span></button><small class="demo-note">Demo only — no payment is collected.</small></div></aside></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
